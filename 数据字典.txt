@@ -1,0 +1,11 @@
+常规字段
+50 name
+100 
+200 remark url
+
+admin 系统管理员用户
+role 系统角色
+
+
+
+
