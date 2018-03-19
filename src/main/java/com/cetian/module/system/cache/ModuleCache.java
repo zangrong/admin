@@ -152,6 +152,7 @@ public class ModuleCache extends BaseCache{
 		}
 		SessionModule sessionModule = new SessionModule();
 		sessionModule.setId(module.getId());
+		sessionModule.setLogo(module.getLogo());
 		sessionModule.setName(module.getName());
 		sessionModule.setValue(module.getValue());
 		return sessionModule;

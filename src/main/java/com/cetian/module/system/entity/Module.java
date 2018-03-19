@@ -31,6 +31,7 @@ import com.cetian.base.entity.IdEntity;
 @Table(name = "ct_sys_module")
 public class Module extends IdEntity{
 	private String name; // 中文显示名
+	private String logo; // 模块列表模块名称前面的图标
 	private String value;// 英文key值，key在sql里是关键字
 	private Integer sort;// 可以手动排序，默认0
 	private Boolean enabled;// 是否启用，默认启用
@@ -48,6 +49,12 @@ public class Module extends IdEntity{
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getLogo() {
+		return logo;
+	}
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
 	public String getValue() {
 		return value;

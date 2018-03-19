@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -73,11 +71,10 @@ public class CtUserDetailsService implements UserDetailsService {
 	/**
 	 * @Title: createSessionUser   
 	 * @Description: 在session里创建一个user对象，方便程序调用
-	 * @param session      
 	 * @return: SessionUser      
 	 * @throws:
 	 */
-	public SessionUser createSessionUser(HttpSession session) {
+	public SessionUser createSessionUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserDetails principal = (UserDetails) authentication.getPrincipal();
 		Admin admin = adminDao.findByUsername(principal.getUsername());

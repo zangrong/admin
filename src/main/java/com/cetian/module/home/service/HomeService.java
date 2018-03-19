@@ -39,7 +39,7 @@ public class HomeService {
 		SessionUser sessionUser = (SessionUser) session.getAttribute(SessionUser.SESSION_USER_KEY);
 		// 如果 sessionUser 为null 则创建 sessionUser 到 session
 		if (sessionUser == null) {
-			sessionUser = ctUserDetailsService.createSessionUser(session);
+			sessionUser = ctUserDetailsService.createSessionUser();
 			session.setAttribute(SessionUser.SESSION_USER_KEY, sessionUser);
 		}
 		return sessionUser.getPath();

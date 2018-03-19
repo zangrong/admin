@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class SessionModule {
 	private Long id;
 	private String name;
+	private String logo;// 模块名称前面的标识
 	private boolean active;// 是否处于激活状态
 	private SessionModule parent;// 父模块
 	private String value;
@@ -42,6 +43,12 @@ public class SessionModule {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getLogo() {
+		return logo;
+	}
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
 	public boolean isActive() {
 		return active;
