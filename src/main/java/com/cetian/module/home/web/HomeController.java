@@ -34,9 +34,8 @@ public class HomeController {
 	
 	@RequestMapping("/home")
 	public String home(HttpSession session) {
-		String redirectPath = homeService.home(session);
-		// 重定向该用户到第一个能访问的路径
-		return "redirect:"+redirectPath;
+		homeService.home(session);
+		return "home/home";
 	}
 	
 	@RequestMapping("/test")

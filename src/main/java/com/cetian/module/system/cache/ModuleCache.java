@@ -10,6 +10,8 @@ package com.cetian.module.system.cache;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -46,6 +48,15 @@ public class ModuleCache extends BaseCache{
 	
 	private RedisTemplate<Object, Object> cache() {
 		return redis1_0;
+	}
+	
+	@PostConstruct
+	public void init() {
+		// 启动时刷新 sessionModules 缓存
+		List<Module> modules = moduleDao.findTopLevelOrderBySort();
+		Iterable<Permission> permissions = permissionDao.findAll();
+		List<SessionModule> sessionModules = recruitProcess(null, modules, permissions);
+		save(sessionModules);
 	}
 	
 	/**

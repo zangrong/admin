@@ -26,10 +26,11 @@ public class WebSiteMeshFilter extends ConfigurableSiteMeshFilter {
 	@Override
 	protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
 		// 模板应用
-		builder.addDecoratorPath("/index*", TEMPLATE_INDEX);
-		builder.addDecoratorPath("/home*", TEMPLATE_MAIN);
 		builder.addDecoratorPath("/login*", TEMPLATE_LOGIN);
+		builder.addDecoratorPath("/index*", TEMPLATE_INDEX);
 		
+		builder.addDecoratorPath("/home*", TEMPLATE_MAIN);
+		builder.addDecoratorPath("/welcome*", TEMPLATE_MAIN);
 		
 		// 过滤，不使用模板
 		builder.addExcludedPath("/static/*")

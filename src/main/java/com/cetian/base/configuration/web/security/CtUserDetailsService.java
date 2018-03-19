@@ -117,11 +117,7 @@ public class CtUserDetailsService implements UserDetailsService {
 				removeList.add(sessionModule);
 				sessionModule.setParent(null);
 			}else {
-				// 设置第一个有效的module.path 作为默认路径
-				if (StringUtils.isBlank(user.getPath()) && StringUtils.isNotBlank(sessionModule.getPath())) {
-					user.setPath(sessionModule.getPath());
-					sessionModule.setActive(true);
-				}
+				// 递归检查是否有子模块权限
 				recruitCheck(user, sessionModule.getChildren());
 			}
 		}

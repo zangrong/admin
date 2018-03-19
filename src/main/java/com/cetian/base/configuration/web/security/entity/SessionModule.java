@@ -49,6 +49,7 @@ public class SessionModule {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+	@JsonIgnore
 	public SessionModule getParent() {
 		return parent;
 	}
