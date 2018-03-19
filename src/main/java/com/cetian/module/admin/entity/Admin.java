@@ -9,7 +9,6 @@ package com.cetian.module.admin.entity;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -21,7 +20,6 @@ import javax.persistence.Transient;
 import org.apache.commons.lang3.StringUtils;
 
 import com.cetian.base.entity.IdEntity;
-import com.cetian.module.system.entity.Role;
 
 /**
  * @ClassName: Admin
@@ -45,9 +43,7 @@ public class Admin extends IdEntity {
 	
 	@Transient
 	private Set<String> roleSet = new HashSet<>();
-	@Transient
-	private List<Role> roleList;
-
+	
 	public String getHead() {
 		return head;
 	}
@@ -86,14 +82,6 @@ public class Admin extends IdEntity {
 
 	public void setRoles(String roles) {
 		this.roles = roles;
-		// 把权限点添加到集合中
-		if (StringUtils.isNotBlank(roles)) {
-			this.roleSet.clear();
-			String[] split = StringUtils.split(roles, ",");
-			for (String roleValue : split) {
-				this.roleSet.add(roleValue);
-			}
-		}
 	}
 
 	public Date getCreateDate() {
@@ -111,22 +99,16 @@ public class Admin extends IdEntity {
 	public void setStatus(AdminStatusEnum status) {
 		this.status = status;
 	}
-
+	
 	public Set<String> getRoleSet() {
+		roleSet.clear();
+		if (StringUtils.isNotBlank(this.roles)) {
+			String[] split = StringUtils.split(this.roles, ",");
+			for (String role : split) {
+				this.roleSet.add(role);
+			}
+		}
 		return roleSet;
 	}
-
-	public void setRoleSet(Set<String> roleSet) {
-		this.roleSet = roleSet;
-	}
-
-	public List<Role> getRoleList() {
-		return roleList;
-	}
-
-	public void setRoleList(List<Role> roleList) {
-		this.roleList = roleList;
-	}
-	
 
 }

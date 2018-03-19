@@ -7,10 +7,13 @@
  */
 package com.cetian.base.configuration.web.security;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +26,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.cetian.base.configuration.web.security.entity.SessionModule;
 import com.cetian.base.configuration.web.security.entity.SessionUser;
 import com.cetian.module.admin.dao.AdminDao;
 import com.cetian.module.admin.entity.Admin;
+import com.cetian.module.system.cache.ModuleCache;
 import com.cetian.module.system.dao.RoleDao;
 import com.cetian.module.system.entity.Role;
-import com.cetian.module.system.service.ModuleService;
 
 /**
  * @ClassName:  CtUserDetailsService   
@@ -48,7 +52,7 @@ public class CtUserDetailsService implements UserDetailsService {
 	private RoleDao roleDao;
 	
 	@Autowired
-	private ModuleService moduleService;
+	private ModuleCache moduleCache;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -70,19 +74,61 @@ public class CtUserDetailsService implements UserDetailsService {
 	 * @Title: createSessionUser   
 	 * @Description: 在session里创建一个user对象，方便程序调用
 	 * @param session      
-	 * @return: void      
+	 * @return: SessionUser      
 	 * @throws:
 	 */
-	public void createSessionUser(HttpSession session) {
+	public SessionUser createSessionUser(HttpSession session) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		Admin admin = adminDao.findByUsername(authentication.getPrincipal().toString());
+		UserDetails principal = (UserDetails) authentication.getPrincipal();
+		Admin admin = adminDao.findByUsername(principal.getUsername());
+		
 		SessionUser user = new SessionUser();
-		user.setRoles(admin.getRoleSet());
-		List<Role> roles = roleDao.findByValueIn(admin.getRoleSet());
+		Set<String> roleSet = admin.getRoleSet();
+		user.setRoles(roleSet);
+		List<Role> roles = roleDao.findByValueIn(roleSet);
 		for (Role role : roles) {
 			user.addPermissions(role.getPermissionSet());
 		}
-		moduleService.setSessionModuleList(user);
+		// 从缓存中获取 module 列表
+		List<SessionModule> sessionModules = moduleCache.get();
+		// 过滤出该用户有权限的 module 列表
+		recruitCheck(user, sessionModules);
+		// 设置该 module 列表到user
+		user.setModules(sessionModules);
+		return user;
+	}
+	
+	/**
+	 * @Title: recruitCheck   
+	 * @Description: 递归匹配检查，用户具备哪些模块的权限
+	 * @param user
+	 * @param sessionModules      
+	 * @return: void      
+	 * @throws:
+	 */
+	private void recruitCheck(SessionUser user, List<SessionModule> sessionModules) {
+		if (CollectionUtils.isEmpty(sessionModules)) {
+			return;
+		}
+		List<SessionModule> removeList = new ArrayList<>();
+		for (SessionModule sessionModule : sessionModules) {
+			// 如果 user 和 sessionModule 的 permissions 的交集为空，表示 user 没有该 sessionModule 权限
+			if (!CollectionUtils.containsAny(sessionModule.getPermissions(), user.getPermissions())) {
+				removeList.add(sessionModule);
+				sessionModule.setParent(null);
+			}else {
+				// 设置第一个有效的module.path 作为默认路径
+				if (StringUtils.isBlank(user.getPath()) && StringUtils.isNotBlank(sessionModule.getPath())) {
+					user.setPath(sessionModule.getPath());
+					sessionModule.setActive(true);
+				}
+				recruitCheck(user, sessionModule.getChildren());
+			}
+		}
+		// 移除没有权限的模块集合
+		if (CollectionUtils.isNotEmpty(removeList)) {
+			sessionModules.removeAll(removeList);
+		}
 	}
 
 }

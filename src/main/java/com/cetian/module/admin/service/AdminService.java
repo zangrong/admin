@@ -8,9 +8,7 @@
 package com.cetian.module.admin.service;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cetian.module.admin.dao.AdminDao;
 import com.cetian.module.admin.entity.Admin;
 import com.cetian.module.system.dao.RoleDao;
-import com.cetian.module.system.entity.Role;
 
 /**
  * @ClassName:  AdminService   
@@ -56,15 +53,4 @@ public class AdminService {
 		Optional<Admin> admin = adminDao.findById(id);
 		return admin.get();
 	}
-	
-	public Admin getWithRoleList(Long id) {
-		Optional<Admin> oa = adminDao.findById(id);
-		Admin admin = oa.get();
-		Set<String> roleSet = admin.getRoleSet();
-		List<Role> roleList = roleDao.findByValueIn(roleSet);
-		admin.setRoleList(roleList);
-		return admin;
-	}
-	
-	
 }

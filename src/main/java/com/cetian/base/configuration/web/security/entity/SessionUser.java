@@ -25,6 +25,7 @@ public class SessionUser {
 	
 	private Long id;
 	private String head;// 头像
+	private String path;// 默认访问路径
 	private String name;// 用户名
 	private String username;// 登录名
 	private List<SessionModule> modules = new ArrayList<>();
@@ -47,6 +48,12 @@ public class SessionUser {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
 	}
 	public String getUsername() {
 		return username;

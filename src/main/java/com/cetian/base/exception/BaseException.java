@@ -14,7 +14,7 @@ package com.cetian.base.exception;
  * @author: zangrong
  * 
  */
-public class BaseException extends Exception {
+public class BaseException extends RuntimeException {
 
 	private static final long serialVersionUID = -7646536682167989735L;
 

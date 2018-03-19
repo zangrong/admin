@@ -13,9 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.cetian.base.configuration.web.security.CtUserDetailsService;
-import com.cetian.base.configuration.web.security.entity.SessionUser;
 import com.cetian.module.admin.service.AdminService;
+import com.cetian.module.home.service.HomeService;
 
 /**
  * @ClassName: HomeController
@@ -31,18 +30,13 @@ public class HomeController {
 	private AdminService adminService;
 	
 	@Autowired
-	private CtUserDetailsService ctUserDetailsService;
+	private HomeService homeService;
 	
 	@RequestMapping("/home")
 	public String home(HttpSession session) {
-		
-		SessionUser sessionUser = (SessionUser) session.getAttribute(SessionUser.SESSION_USER_KEY);
-		// 如果 sessionUser 为null 则创建 sessionUser 到 session
-		if (sessionUser == null) {
-			ctUserDetailsService.createSessionUser(session);
-		}
+		String redirectPath = homeService.home(session);
 		// 重定向该用户到第一个能访问的路径
-		return "home";
+		return "redirect:"+redirectPath;
 	}
 	
 	@RequestMapping("/test")

@@ -59,16 +59,16 @@ public class Role extends IdEntity{
 	}
 	public void setPermissions(String permissions) {
 		this.permissions = permissions;
+	}
+	public Set<String> getPermissionSet() {
 		// 把权限点添加到集合中
-		if (StringUtils.isNotBlank(permissions)) {
-			this.permissionSet.clear();
+		this.permissionSet.clear();
+		if (StringUtils.isNotBlank(this.permissions)) {
 			String[] split = StringUtils.split(permissions, ",");
 			for (String per : split) {
 				this.permissionSet.add(per);
 			}
 		}
-	}
-	public Set<String> getPermissionSet() {
 		return permissionSet;
 	}
 	// 判断 role 是否包含指定的权限 permissionValue

@@ -24,5 +24,12 @@ spring:
       jdbc-url: jdbc:mysql://localhost:3306/admin1?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&verifyServerCertificate=false&useSSL=true
       username: root
       password: root
-      
+  cache:
+    redis1:
+      hostname: localhost
+      port: 6379
+      password:
+      clientName: ct
+      readTimeout: 5
+      connectTimeout: 5
       

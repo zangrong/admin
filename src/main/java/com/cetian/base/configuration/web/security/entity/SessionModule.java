@@ -13,6 +13,8 @@ import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @ClassName:  SessionModule   
  * @Description:TODO
@@ -23,6 +25,8 @@ import org.apache.commons.collections.CollectionUtils;
 public class SessionModule {
 	private Long id;
 	private String name;
+	private boolean active;// 是否处于激活状态
+	private SessionModule parent;// 父模块
 	private String value;
 	private String path;
 	private Set<String> permissions = new HashSet<>();// permissionValue
@@ -39,7 +43,18 @@ public class SessionModule {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	public SessionModule getParent() {
+		return parent;
+	}
+	public void setParent(SessionModule parent) {
+		this.parent = parent;
+	}
 	public String getValue() {
 		return value;
 	}
@@ -71,6 +86,7 @@ public class SessionModule {
 		permissions.addAll(permissionValues);
 	}
 	// 是否是最底一层模块
+	@JsonIgnore
 	public boolean isLeaf() {
 		return CollectionUtils.isEmpty(this.children);
 	}
