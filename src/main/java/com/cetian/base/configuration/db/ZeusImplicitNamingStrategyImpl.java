@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2017 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2017 cetian.com Inc. All rights reserved. 
  * @Title: YunImplicitNamingStrategyImpl.java 
  * @date 2017年3月5日 下午8:31:51 
  * @version V1.0

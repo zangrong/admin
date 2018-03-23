@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2017 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2017 cetian.com Inc. All rights reserved. 
  * @Title: FilterConfiguration.java 
  * @date 2017年3月3日 下午2:07:26 
  * @version V1.0
@@ -9,11 +9,11 @@ package com.cetian.base.configuration.web;
 
 import java.io.IOException;
 
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -31,45 +31,41 @@ import com.fasterxml.jackson.databind.SerializerProvider;
  * 
  */
 @Configuration
-public class WebConfiguration {
-
-	/**
-	 * 装饰器
-	 * 
-	 */
-	@Bean
-	public FilterRegistrationBean<WebSiteMeshFilter> siteMeshFilter() {
-		FilterRegistrationBean<WebSiteMeshFilter> fitler = new FilterRegistrationBean<>();
-		WebSiteMeshFilter siteMeshFilter = new WebSiteMeshFilter();
-		fitler.setFilter(siteMeshFilter);
-		return fitler;
+public class WebConfiguration implements WebMvcConfigurer {
+	
+	
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
 	}
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		String[] methods = { "GET", "POST", "OPTIONS", "DELETE" };
+		registry.addMapping("/**").allowCredentials(true).allowedMethods(methods);
+	}
+
+	// setUseSuffixPatternMatch :
+	// 设置是否是后缀模式匹配，如“/user”是否匹配/user.*，默认真即匹配；
+	// setUseTrailingSlashMatch :
+	// 设置是否自动后缀路径模式匹配，如“/user”是否匹配“/user/”，默认真即匹配；
+	@Override
+	public void configurePathMatch(PathMatchConfigurer configurer) {
+		configurer.setUseSuffixPatternMatch(false).setUseTrailingSlashMatch(false);
+	}
+
+	@Bean(name = "objectMapper")
+	public ObjectMapper objectMapper() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+		objectMapper.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>() {
 			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				String[] methods = { "GET", "POST", "OPTIONS", "DELETE" };
-				registry.addMapping("/**").allowCredentials(true).allowedMethods(methods);
+			public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers)
+					throws IOException, JsonProcessingException {
+				gen.writeString("");
 			}
-
-			// setUseSuffixPatternMatch :
-			// 设置是否是后缀模式匹配，如“/user”是否匹配/user.*，默认真即匹配；
-			// setUseTrailingSlashMatch :
-			// 设置是否自动后缀路径模式匹配，如“/user”是否匹配“/user/”，默认真即匹配；
-			@Override
-			public void configurePathMatch(PathMatchConfigurer configurer) {
-				configurer.setUseSuffixPatternMatch(false).setUseTrailingSlashMatch(false);
-			}
-
-			// @Override
-			// public void addResourceHandlers(ResourceHandlerRegistry registry) {
-			// registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-			// super.addResourceHandlers(registry);
-			// }
-
-		};
+		});
+		return objectMapper;
 	}
 
 	/**
@@ -89,27 +85,16 @@ public class WebConfiguration {
 	 * @return: EmbeddedServletContainerCustomizer
 	 * @throws:
 	 */
-//	@Bean
-//	public EmbeddedServletContainerCustomizer customizer() {
-//		return container -> {
-//			if (container instanceof TomcatEmbeddedServletContainerFactory) {
-//				TomcatEmbeddedServletContainerFactory tomcat = (TomcatEmbeddedServletContainerFactory) container;
-//				tomcat.addContextCustomizers(context -> context.setCookieProcessor(new LegacyCookieProcessor()));
-//			}
-//		};
-//	}
+	// @Bean
+	// public EmbeddedServletContainerCustomizer customizer() {
+	// return container -> {
+	// if (container instanceof TomcatEmbeddedServletContainerFactory) {
+	// TomcatEmbeddedServletContainerFactory tomcat =
+	// (TomcatEmbeddedServletContainerFactory) container;
+	// tomcat.addContextCustomizers(context -> context.setCookieProcessor(new
+	// LegacyCookieProcessor()));
+	// }
+	// };
+	// }
 
-	@Bean(name = "objectMapper")
-	public ObjectMapper objectMapper() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
-		objectMapper.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>() {
-			@Override
-			public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers)
-					throws IOException, JsonProcessingException {
-				gen.writeString("");
-			}
-		});
-		return objectMapper;
-	}
 }

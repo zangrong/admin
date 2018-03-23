@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2017 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2017 cetian.com Inc. All rights reserved. 
  * @Title: JsonStringSqlTypeDescriptor.java 
  * @date 2017年3月7日 下午4:31:07 
  * @version V1.0

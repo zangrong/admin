@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2018 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2018 cetian.com Inc. All rights reserved. 
  * @Title: SessionUser.java 
  * @date 2018年3月16日 下午3:15:37 
  * @version V1.0

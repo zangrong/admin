@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2018 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2018 cetian.com Inc. All rights reserved. 
  * @Title: Admin.java 
  * @date 2018年2月28日 下午1:56:57 
  * @version V1.0

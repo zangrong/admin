@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2018 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2018 cetian.com Inc. All rights reserved. 
  * @Title: Role.java 
  * @date 2018年3月5日 下午4:43:03 
  * @version V1.0

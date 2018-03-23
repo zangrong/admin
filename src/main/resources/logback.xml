@@ -17,9 +17,9 @@
 	<appender name="baselog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<!-- 基础日志 -->
-		<File>@zeus.log.path@/base.log</File>
+		<File>logs/base.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>@zeus.log.path@/base.%d.%i.log</fileNamePattern>
+			<fileNamePattern>logs/base.%d.%i.log</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<!-- or whenever the file size reaches 64 MB -->
@@ -37,9 +37,9 @@
 	<appender name="paylog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 支付相关日志 -->
-    <File>@zeus.log.path@/pay.log</File>
+    <File>logs/pay.log</File>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>@zeus.log.path@/pay.%d.%i.log</fileNamePattern>
+      <fileNamePattern>logs/pay.%d.%i.log</fileNamePattern>
       <timeBasedFileNamingAndTriggeringPolicy
         class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
         <!-- or whenever the file size reaches 64 MB -->
@@ -57,9 +57,9 @@
   <appender name="schedulelog"
     class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- 定时任务相关日志 -->
-    <File>@zeus.log.path@/schedule.log</File>
+    <File>logs/schedule.log</File>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>@zeus.log.path@/schedule.%d.%i.log</fileNamePattern>
+      <fileNamePattern>logs/schedule.%d.%i.log</fileNamePattern>
       <timeBasedFileNamingAndTriggeringPolicy
         class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
         <!-- or whenever the file size reaches 64 MB -->
@@ -77,23 +77,23 @@
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 	</root>
-	<logger name="com.othink" level="INFO" additivity="false">
+	<logger name="com.cetian" level="INFO" additivity="false">
 		<appender-ref ref="baselog" />
 		<appender-ref ref="STDOUT-COLOR" />
 	</logger>
-	<logger name="com.othink.module.order.service" level="INFO" additivity="false">
+	<logger name="com.cetian.module.order.service" level="INFO" additivity="false">
     <appender-ref ref="paylog" />
     <appender-ref ref="STDOUT-COLOR" />
   </logger>
-  <logger name="com.othink.module.order.pay" level="INFO" additivity="false">
+  <logger name="com.cetian.module.order.pay" level="INFO" additivity="false">
     <appender-ref ref="paylog" />
     <appender-ref ref="STDOUT-COLOR" />
   </logger>
-  <logger name="com.othink.module.system.service.BackupService" level="INFO" additivity="false">
+  <logger name="com.cetian.module.system.service.BackupService" level="INFO" additivity="false">
     <appender-ref ref="schedulelog" />
     <appender-ref ref="STDOUT-COLOR" />
   </logger>
-  <logger name="com.othink.module.system.service.ScheduleService" level="INFO" additivity="false">
+  <logger name="com.cetian.module.system.service.ScheduleService" level="INFO" additivity="false">
     <appender-ref ref="schedulelog" />
     <appender-ref ref="STDOUT-COLOR" />
   </logger>

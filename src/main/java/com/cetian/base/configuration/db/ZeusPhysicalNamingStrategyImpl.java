@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2017 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2017 cetian.com Inc. All rights reserved. 
  * @Title: YunPhysicalNamingStrategyImpl.java 
  * @date 2017年3月2日 下午5:11:01 
  * @version V1.0

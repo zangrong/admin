@@ -49,6 +49,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>  
+            <groupId>org.springframework.boot</groupId>  
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>  
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -86,20 +90,6 @@
 		</dependency>
 
 		<!-- 第三方包 -->
-		<dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-jasper</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-		</dependency>
 		<dependency>
             <groupId>org.sitemesh</groupId>
             <artifactId>sitemesh</artifactId>
@@ -157,7 +147,7 @@
 			</activation>
 			<properties>
 				<spring.profiles.active>dev</spring.profiles.active>
-				<zeus.profile>dev</zeus.profile>
+				<cetian.profile>dev</cetian.profile>
 			</properties>
 		</profile>
 		<profile>
@@ -165,7 +155,7 @@
 			<!-- 单元测试环境 -->
 			<properties>
 				<spring.profiles.active>test</spring.profiles.active>
-				<zeus.profile>test</zeus.profile>
+				<cetian.profile>test</cetian.profile>
 			</properties>
 		</profile>
 		<profile>
@@ -173,8 +163,7 @@
 			<!-- 集成测试环境 -->
 			<properties>
 				<spring.profiles.active>pre</spring.profiles.active>
-				<zeus.profile>pre</zeus.profile>
-				<zeus.log.path>/data/othink/test/java_admin/adminlogs</zeus.log.path>
+				<cetian.profile>pre</cetian.profile>
 			</properties>
 		</profile>
 
@@ -183,8 +172,7 @@
 			<!-- 生产环境 -->
 			<properties>
 				<spring.profiles.active>prod</spring.profiles.active>
-				<zeus.profile>prod</zeus.profile>
-				<zeus.log.path>/data/othink/logs/admin</zeus.log.path>
+				<cetian.profile>prod</cetian.profile>
 			</properties>
 		</profile>
 	</profiles>
@@ -205,6 +193,7 @@
 				<filtering>true</filtering>
 				<excludes>
 					<exclude>**/*.keystore</exclude>
+					<exclude>static/**</exclude>
 				</excludes>
 			</resource>
 			<resource>
@@ -212,6 +201,7 @@
 				<filtering>false</filtering>
 				<includes>
 					<include>**/*.keystore</include>
+					<include>static/**</include>
 				</includes>
 			</resource>
 		</resources>

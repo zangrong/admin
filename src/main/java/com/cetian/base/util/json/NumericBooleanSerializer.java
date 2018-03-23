@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2017 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2017 cetian.com Inc. All rights reserved. 
  * @Title: NumericBooleanSerializer.java 
  * @date 2017年3月13日 下午2:39:42 
  * @version V1.0

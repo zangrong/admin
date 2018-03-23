@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2018 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2018 cetian.com Inc. All rights reserved. 
  * @Title: CtAccessDecisionManager.java 
  * @date 2018年3月13日 下午4:07:00 
  * @version V1.0

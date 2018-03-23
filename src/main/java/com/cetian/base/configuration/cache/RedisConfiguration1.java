@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2017 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2017 cetian.com Inc. All rights reserved. 
  * @Title: RedisConfiguration1.java 
  * @date 2017年3月15日 上午9:14:00 
  * @version V1.0

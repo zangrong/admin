@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title,links)">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" th:href="@{/static/bootstrap/dist/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/static/system/css/loginStyle.css}">
+  <title th:replace="${title}">管理系统</title>
+  <th:block th:replace="${links}" />
+</head>
+<body>
+</body>
+</html>

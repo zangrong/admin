@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2018 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2018 cetian.com Inc. All rights reserved. 
  * @Title: BaseException.java 
  * @date 2018年3月1日 下午1:29:48 
  * @version V1.0

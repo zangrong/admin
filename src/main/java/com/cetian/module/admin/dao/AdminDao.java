@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2018 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2018 cetian.com Inc. All rights reserved. 
  * @Title: AdminDao.java 
  * @date 2018年2月28日 下午3:06:12 
  * @version V1.0

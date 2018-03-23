@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2018 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2018 cetian.com Inc. All rights reserved. 
  * @Title: WelcomeController.java 
  * @date 2018年3月19日 下午3:05:32 
  * @version V1.0
@@ -17,10 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author: zangrong
  * 
  */
-@Controller("/welcome")
+@Controller
+@RequestMapping("/welcome")
 public class WelcomeController {
 
-	@RequestMapping("")
+	@RequestMapping
 	public String index() {
 		System.out.println("xxxx");
 		return "home/welcome";

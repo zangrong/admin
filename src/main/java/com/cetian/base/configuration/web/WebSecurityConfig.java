@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2018 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2018 cetian.com Inc. All rights reserved. 
  * @Title: WebSecurityConfig.java 
  * @date 2018年3月1日 下午1:15:59 
  * @version V1.0
@@ -18,8 +18,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
-import com.cetian.base.configuration.web.security.CtUserDetailsService;
 import com.cetian.base.configuration.web.security.CtFilterSecurityInterceptor;
+import com.cetian.base.configuration.web.security.CtUserDetailsService;
 
 /**
  * @ClassName: WebSecurityConfig

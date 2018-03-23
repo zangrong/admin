@@ -1,12 +1,6 @@
-spring:
-  servlet: 
-    multipart: 
-      max-file-size: 50Mb
-      max-request-size: 50Mb
+spring: 
   mvc: 
-    view: 
-      prefix: /WEB-INF/view/
-      suffix: .jsp
+    static-path-pattern: /static/**
   jpa:
     show-sql: false
     database: mysql

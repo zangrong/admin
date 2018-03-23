@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2017 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2017 cetian.com Inc. All rights reserved. 
  * @Title: MysqlConfiguration1.java 
  * @date 2017年2月27日 下午3:33:52 
  * @version V1.0

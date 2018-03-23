@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2017 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2017 cetian.com Inc. All rights reserved. 
  * @Title: IoUtil.java 
  * @date 2017年3月9日 上午9:10:34 
  * @version V1.0

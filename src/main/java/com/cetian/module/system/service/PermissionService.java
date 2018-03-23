@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2018 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2018 cetian.com Inc. All rights reserved. 
  * @Title: PermissionService.java 
  * @date 2018年3月15日 下午4:02:44 
  * @version V1.0

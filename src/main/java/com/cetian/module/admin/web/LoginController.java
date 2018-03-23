@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2018 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2018 cetian.com Inc. All rights reserved. 
  * @Title: LoginController.java 
  * @date 2018年2月28日 下午3:53:39 
  * @version V1.0

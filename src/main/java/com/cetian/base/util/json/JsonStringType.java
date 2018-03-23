@@ -1,5 +1,5 @@
 /**
- * @Copyright: 2017 720yun.com Inc. All rights reserved. 
+ * @Copyright: 2017 cetian.com Inc. All rights reserved. 
  * @Title: JsonStringType.java 
  * @date 2017年3月7日 下午4:27:27 
  * @version V1.0
