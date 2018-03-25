@@ -40,14 +40,14 @@
                     <span th:if="${not #lists.isEmpty(module1.children)}" class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
-                    <ul th:if="${not #lists.isEmpty(module1.children)}" class="treeview-menu">
-			            <li th:each="module2 : ${module1.children}" class="active">
-			                <a th:href="@{${module2.path}}" th:text=" ${module2.name}">
-			                <i th:class="${#strings.isEmpty(module2.logo)} ? 'fa fa-circle-o' : @{${module2.logo}}"></i> Dashboard v1
-			                </a>
-			            </li>
-			        </ul>
                 </a>
+                <ul th:if="${not #lists.isEmpty(module1.children)}" class="treeview-menu">
+                    <li th:each="module2 : ${module1.children}" >
+                        <a th:href="@{${module2.path}}" >
+                            <i th:class="${#strings.isEmpty(module2.logo)} ? 'fa fa-circle-o' : ${module2.logo}"></i> ${module2.name}
+                        </a>
+                    </li>
+                </ul>
             </li>
 		</ul>
 	</section>

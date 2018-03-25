@@ -7,6 +7,9 @@
  */
 package com.cetian.module.system.web;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 /**
  * @ClassName:  RoleController   
  * @Description:TODO
@@ -14,6 +17,8 @@ package com.cetian.module.system.web;
  * @author: zangrong
  * 
  */
+@Controller
+@RequestMapping("/role")
 public class RoleController {
 
 }

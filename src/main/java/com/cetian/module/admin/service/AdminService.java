@@ -11,10 +11,14 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cetian.base.entity.ResponseMessage;
 import com.cetian.module.admin.dao.AdminDao;
 import com.cetian.module.admin.entity.Admin;
 import com.cetian.module.system.dao.RoleDao;
@@ -52,5 +56,22 @@ public class AdminService {
 	public Admin get(Long id) {
 		Optional<Admin> admin = adminDao.findById(id);
 		return admin.get();
+	}
+
+	/**
+	 * @Title: list   
+	 * @Description: 管理员列表
+	 * @param pageNo
+	 * @param pageSize
+	 * @return: ResponseMessage      
+	 * @throws: 
+	 */
+	public ResponseMessage list(int pageNo, int pageSize) {
+		ResponseMessage responseMessage = new ResponseMessage();
+		PageRequest pageRequest = PageRequest.of(pageNo -1, pageSize, Direction.ASC, "id");
+		Page<Admin> page = adminDao.findAll(pageRequest);
+		responseMessage.put(page);
+		responseMessage.success();
+		return responseMessage;
 	}
 }
