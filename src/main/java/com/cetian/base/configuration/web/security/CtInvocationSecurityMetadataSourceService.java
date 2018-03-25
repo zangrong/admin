@@ -69,18 +69,18 @@ public class CtInvocationSecurityMetadataSourceService implements FilterInvocati
      * ConfigAttribute 实际对应role的值
      */
     public void load(){
-    		// role : permission 多对多
-    		Iterable<Role> roles = roleDao.findAll();
-        Iterable<Permission> permissions = permissionDao.findAll();
-        Map<String, List<String>> permissionRoleMap = new HashMap<>();
-        for (Permission permission : permissions) {
-        		String permissionValue = permission.getValue();
-        		List<String> roleValues = permissionRoleMap.get(permissionValue);
-        		if (roleValues == null) {
-        			roleValues = new ArrayList<>();
-        			permissionRoleMap.put(permissionValue, roleValues);
-        		}
-        		for (Role role : roles) {
+		// role : permission 多对多
+		Iterable<Role> roles = roleDao.findAll();
+		Iterable<Permission> permissions = permissionDao.findAll();
+		Map<String, List<String>> permissionRoleMap = new HashMap<>();
+		for (Permission permission : permissions) {
+			String permissionValue = permission.getValue();
+			List<String> roleValues = permissionRoleMap.get(permissionValue);
+			if (roleValues == null) {
+				roleValues = new ArrayList<>();
+				permissionRoleMap.put(permissionValue, roleValues);
+			}
+			for (Role role : roles) {
 				if (role.hasPermission(permissionValue)) {
 					roleValues.add(role.getValue());
 				}
@@ -102,8 +102,6 @@ public class CtInvocationSecurityMetadataSourceService implements FilterInvocati
 				ConfigAttribute config = new SecurityConfig("ROLE_"+roleValue);
 				configs.add(config);
 			}
-            
-            
             map.put(matcher, configs);
         }
 

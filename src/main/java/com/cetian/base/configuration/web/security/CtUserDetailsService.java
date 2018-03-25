@@ -8,7 +8,9 @@
 package com.cetian.base.configuration.web.security;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -30,7 +32,9 @@ import com.cetian.module.admin.dao.AdminDao;
 import com.cetian.module.admin.entity.Admin;
 import com.cetian.module.system.cache.ModuleCache;
 import com.cetian.module.system.dao.RoleDao;
+import com.cetian.module.system.entity.Permission;
 import com.cetian.module.system.entity.Role;
+import com.cetian.module.system.service.PermissionService;
 
 /**
  * @ClassName:  CtUserDetailsService   
@@ -48,6 +52,9 @@ public class CtUserDetailsService implements UserDetailsService {
 	
 	@Autowired
 	private RoleDao roleDao;
+	
+	@Autowired
+	private PermissionService permissionService;
 	
 	@Autowired
 	private ModuleCache moduleCache;
@@ -88,8 +95,11 @@ public class CtUserDetailsService implements UserDetailsService {
 		}
 		// 从缓存中获取 module 列表
 		List<SessionModule> sessionModules = moduleCache.get();
+		
+		Map<String, Permission> permissionMap = permissionService.getKeyMap();
+		
 		// 过滤出该用户有权限的 module 列表
-		recruitCheck(user, sessionModules);
+		recruitCheck(user, sessionModules, permissionMap);
 		// 设置该 module 列表到user
 		user.setModules(sessionModules);
 		return user;
@@ -100,10 +110,11 @@ public class CtUserDetailsService implements UserDetailsService {
 	 * @Description: 递归匹配检查，用户具备哪些模块的权限
 	 * @param user
 	 * @param sessionModules      
+	 * @param permissionMap 
 	 * @return: void      
 	 * @throws:
 	 */
-	private void recruitCheck(SessionUser user, List<SessionModule> sessionModules) {
+	private void recruitCheck(SessionUser user, List<SessionModule> sessionModules, Map<String, Permission> permissionMap) {
 		if (CollectionUtils.isEmpty(sessionModules)) {
 			return;
 		}
@@ -114,8 +125,26 @@ public class CtUserDetailsService implements UserDetailsService {
 				removeList.add(sessionModule);
 				sessionModule.setParent(null);
 			}else {
-				// 递归检查是否有子模块权限
-				recruitCheck(user, sessionModule.getChildren());
+				List<SessionModule> children = sessionModule.getChildren();
+				if (CollectionUtils.isEmpty(children)) {
+					// 如果子模块为空，就要确定访问路径 path
+					// 根据user 在该模块下的权限，找出可以访问的路径
+					@SuppressWarnings("unchecked")
+					Collection<String> intersection = CollectionUtils.intersection(user.getPermissions(), sessionModule.getPermissions());
+					for (String perValue : intersection) {
+						Permission permission = permissionMap.get(perValue);
+						if (permission != null && StringUtils.isNotBlank(permission.getPath())) {
+							sessionModule.setPath(permission.getPath());
+							break;
+						}
+					}
+					if (StringUtils.isBlank(sessionModule.getPath())) {
+						log.warn("sessionModule[{},{}] 未找到匹配的 path", sessionModule.getId(), sessionModule.getName());
+					}
+				}else {
+					// 递归检查是否有子模块权限
+					recruitCheck(user, children, permissionMap);
+				}
 			}
 		}
 		// 移除没有权限的模块集合

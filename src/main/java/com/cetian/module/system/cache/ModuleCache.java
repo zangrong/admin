@@ -13,7 +13,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,18 +119,7 @@ public class ModuleCache extends BaseCache{
 			}
 			// 递归处理子模块
 			List<Module> children = module.getChildren();
-			if (CollectionUtils.isEmpty(children)) {
-				// 如果子模块为空，就要确定访问路径 path
-				for (Permission permission : permissions) {
-					if (StringUtils.isNotBlank(permission.getPath())) {
-						sessionModule.setPath(permission.getPath());
-						break;
-					}
-				}
-				if (StringUtils.isBlank(sessionModule.getPath())) {
-					log.warn("sessionModule[{},{}] 未找到匹配的 path", sessionModule.getId(), sessionModule.getName());
-				}
-			}else {
+			if (CollectionUtils.isNotEmpty(children)) {
 				// 如果子模块不为空，就要递归处理
 				List<SessionModule> sessionModuleChildren = recruitProcess(sessionModule, children, permissions);
 				sessionModule.setChildren(sessionModuleChildren);

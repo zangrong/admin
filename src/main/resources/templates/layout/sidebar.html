@@ -32,13 +32,21 @@
 		<!-- sidebar menu: : style can be found in sidebar.less -->
 		<ul class="sidebar-menu" data-widget="tree">
 			<li class="header">MAIN NAVIGATION</li>
-			<li th:each="module1 : ${session.session_user.modules}" class="active treeview">
-			    <a href="#">
-                    <i class="${module1.logo}"></i>
+			<li th:each="module1 : ${session.session_user.modules}" 
+			  th:class="${not #lists.isEmpty(module1.children)} ? 'treeview'">
+			    <a href="#" th:href="${#strings.isEmpty(module1.path)} ? '#' : @{${module1.path}}">
+                    <i th:class="${#strings.isEmpty(module1.logo)} ? 'fa fa-circle-o' : @{${module1.logo}}"></i>
                     <span th:text="${module1.name}">模块名称</span>
-                    <span class="pull-right-container">
+                    <span th:if="${not #lists.isEmpty(module1.children)}" class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
+                    <ul th:if="${not #lists.isEmpty(module1.children)}" class="treeview-menu">
+			            <li th:each="module2 : ${module1.children}" class="active">
+			                <a th:href="@{${module2.path}}" th:text=" ${module2.name}">
+			                <i th:class="${#strings.isEmpty(module2.logo)} ? 'fa fa-circle-o' : @{${module2.logo}}"></i> Dashboard v1
+			                </a>
+			            </li>
+			        </ul>
                 </a>
             </li>
 		</ul>
