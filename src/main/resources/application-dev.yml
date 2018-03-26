@@ -1,6 +1,8 @@
 spring: 
   mvc: 
     static-path-pattern: /static/**
+  thymeleaf:
+    cache: false
   jpa:
     show-sql: false
     database: mysql

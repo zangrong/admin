@@ -35,7 +35,7 @@ public class HomeController {
 	@RequestMapping("/home")
 	public String home(HttpSession session) {
 		homeService.home(session);
-		return "home/home";
+		return "view/home/home";
 	}
 	
 	@RequestMapping("/test")

@@ -31,6 +31,7 @@ public class ResponseMessage {
 	
 	public static final int CODE_SUCCESS = 10000;// 正常成功
 	public static final int CODE_FAILED = 20000;// 失败
+	public static final int CODE_NOT_FOUND = 20001;// 数据不存在
 	
 	
 	private boolean success;// 是否成功
@@ -79,5 +80,15 @@ public class ResponseMessage {
 	public void success() {
 		this.success = true;
 		this.code = CODE_SUCCESS;
+	}
+	/**
+	 * @Title: notFound   
+	 * @Description: 数据不存在  
+	 * @return: void      
+	 * @throws: 
+	 */
+	public void notFound() {
+		this.success = false;
+		this.code = CODE_NOT_FOUND;
 	}
 }

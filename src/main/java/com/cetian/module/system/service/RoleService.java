@@ -7,8 +7,13 @@
  */
 package com.cetian.module.system.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.cetian.base.entity.ResponseMessage;
+import com.cetian.module.system.dao.RoleDao;
+import com.cetian.module.system.entity.Role;
 
 /**
  * @ClassName:  RoleService   
@@ -20,5 +25,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class RoleService {
+	
+	@Autowired
+	private RoleDao roleDao;
+
+	/**
+	 * @Title: list   
+	 * @Description: 所有角色
+	 * @return: ResponseMessage      
+	 * @throws: 
+	 */
+	public ResponseMessage list() {
+		ResponseMessage responseMessage = new ResponseMessage();
+		Iterable<Role> roles = roleDao.findAll();
+		responseMessage.put("roles", roles);
+		responseMessage.success();
+		return responseMessage;
+	}
 
 }

@@ -7,9 +7,9 @@
  */
 package com.cetian.module.admin.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,9 +17,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.cetian.base.entity.IdEntity;
+import com.cetian.module.system.entity.Role;
 
 /**
  * @ClassName: Admin
@@ -38,11 +37,11 @@ public class Admin extends IdEntity {
 	private String password;// 密码，密文
 	@Enumerated(EnumType.ORDINAL)
 	private AdminStatusEnum status;// 状态
-	private String roles;// 角色key值
 	private Date createDate;// 创建时间
+	private Date updateDate;// 更新时间
 	
 	@Transient
-	private Set<String> roleSet = new HashSet<>();
+	private List<Role> roles = new ArrayList<>();
 	
 	public String getHead() {
 		return head;
@@ -76,20 +75,20 @@ public class Admin extends IdEntity {
 		this.password = password;
 	}
 
-	public String getRoles() {
-		return roles;
-	}
-
-	public void setRoles(String roles) {
-		this.roles = roles;
-	}
-
 	public Date getCreateDate() {
 		return createDate;
 	}
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+	
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public AdminStatusEnum getStatus() {
@@ -99,16 +98,13 @@ public class Admin extends IdEntity {
 	public void setStatus(AdminStatusEnum status) {
 		this.status = status;
 	}
-	
-	public Set<String> getRoleSet() {
-		roleSet.clear();
-		if (StringUtils.isNotBlank(this.roles)) {
-			String[] split = StringUtils.split(this.roles, ",");
-			for (String role : split) {
-				this.roleSet.add(role);
-			}
-		}
-		return roleSet;
+
+	public List<Role> getRoles() {
+		return roles;
 	}
 
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+	
 }

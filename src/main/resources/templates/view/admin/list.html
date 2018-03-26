@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/template :: head(~{::title}, _)">
+    <title>AdminLTE 2 | Dashboard</title>
+</head>
+<body th:replace="layout/template :: body(~{::.content-wrapper}, ~{::script})">
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<h1>
+				管理员管理 <small>Control panel</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li class="active">Dashboard</li>
+			</ol>
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Hover Data Table</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="adminTable" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>  </th>
+                  <th>头像</th>
+                  <th>管理员</th>
+                  <th>登录名</th>
+                  <th>角色</th>
+                  <th>创建时间</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="admin : ${admins}">
+                  <td th:text="${index}+1">1</td>
+                  <td>头像</td>
+                  <td th:text="${admin.name}">管理员</td>
+                  <td th:text="${admin.username}">登录名</td>
+                  <td>角色</td>
+                  <td th:text="${admin.createDate}">登录名</td>
+                  <td>操作</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+			<!-- /.row (main row) -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+	<script th:src="@{/system/js/test.js}"></script>
+</body>
+</html>

@@ -14,7 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.collections.CollectionUtils;
 
 import com.cetian.base.entity.IdEntity;
 
@@ -28,13 +28,14 @@ import com.cetian.base.entity.IdEntity;
 @Entity
 @Table(name = "ct_sys_role")
 public class Role extends IdEntity{
+	
+	public static final String ROLE_SUPER = "super";
 
 	private String name;// 角色名
-	private String value;// 随机字符串作为角色值，目前考虑是uuid
+	private String value;// 随机字符串作为角色值，目前考虑是super,admin
 	private String remark;// 备注信息
-	private String permissions;// 所包含的permission，用英文逗号(,)隔开
 	@Transient
-	private Set<String> permissionSet = new HashSet<>();// 权限点集合，瞬时属性
+	private Set<String> permissions = new HashSet<>();// 权限点集合，瞬时属性
 	
 	public String getName() {
 		return name;
@@ -54,26 +55,22 @@ public class Role extends IdEntity{
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public String getPermissions() {
+	
+	public Set<String> getPermissions() {
 		return permissions;
 	}
-	public void setPermissions(String permissions) {
+	public void setPermissions(Set<String> permissions) {
 		this.permissions = permissions;
-	}
-	public Set<String> getPermissionSet() {
-		// 把权限点添加到集合中
-		this.permissionSet.clear();
-		if (StringUtils.isNotBlank(this.permissions)) {
-			String[] split = StringUtils.split(permissions, ",");
-			for (String per : split) {
-				this.permissionSet.add(per);
-			}
-		}
-		return permissionSet;
 	}
 	// 判断 role 是否包含指定的权限 permissionValue
 	public boolean hasPermission(String permissionValue) {
-		return permissionSet.contains(permissionValue);
+		if (permissionValue == null) {
+			return true;
+		}
+		if (CollectionUtils.isEmpty(permissions)) {
+			return false;
+		}
+		return permissions.contains(permissionValue);
 	}
 	
 }

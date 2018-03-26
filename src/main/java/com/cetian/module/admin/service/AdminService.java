@@ -74,4 +74,40 @@ public class AdminService {
 		responseMessage.success();
 		return responseMessage;
 	}
+	
+	public ResponseMessage all() {
+		ResponseMessage responseMessage = new ResponseMessage();
+		Iterable<Admin> admins = adminDao.findAll();
+		responseMessage.put("admins", admins);
+		responseMessage.success();
+		return responseMessage;
+	}
+	
+	public ResponseMessage create(Admin admin) {
+		ResponseMessage responseMessage = new ResponseMessage();
+		// TODO 校验
+		
+		adminDao.save(admin);
+		responseMessage.put("admin", admin);
+		responseMessage.success();
+		return responseMessage;
+	}
+
+	/**
+	 * @Title: detail   
+	 * @Description: 查找一个admin
+	 * @param id
+	 * @return: ResponseMessage      
+	 * @throws: 
+	 */
+	public ResponseMessage detail(Long id) {
+		ResponseMessage responseMessage = new ResponseMessage();
+		Optional<Admin> optional = adminDao.findById(id);
+		if (!optional.isPresent()) {
+			responseMessage.notFound();
+		}
+		responseMessage.put("admin", optional.get());
+		responseMessage.success();
+		return responseMessage;
+	}
 }

@@ -76,6 +76,9 @@ public class SessionUser {
 	public Set<String> getPermissions() {
 		return permissions;
 	}
+	public void setPermissions(Set<String> permissions) {
+		this.permissions = permissions;
+	}
 	public void addPermissions(Collection<String> permissions) {
 		this.permissions.addAll(permissions);
 	}

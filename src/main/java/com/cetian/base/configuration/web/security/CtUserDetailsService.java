@@ -31,6 +31,7 @@ import com.cetian.base.configuration.web.security.entity.SessionUser;
 import com.cetian.module.admin.dao.AdminDao;
 import com.cetian.module.admin.entity.Admin;
 import com.cetian.module.system.cache.ModuleCache;
+import com.cetian.module.system.dao.PermissionDao;
 import com.cetian.module.system.dao.RoleDao;
 import com.cetian.module.system.entity.Permission;
 import com.cetian.module.system.entity.Role;
@@ -54,6 +55,9 @@ public class CtUserDetailsService implements UserDetailsService {
 	private RoleDao roleDao;
 	
 	@Autowired
+	private PermissionDao permissionDao;
+	
+	@Autowired
 	private PermissionService permissionService;
 	
 	@Autowired
@@ -70,7 +74,8 @@ public class CtUserDetailsService implements UserDetailsService {
 		
 		UserBuilder builder = User.withUsername(username);
 		builder.password(admin.getPassword());
-		builder.roles(StringUtils.split(admin.getRoles(), ","));
+		Set<String> roles = roleDao.findValueByAdminId(admin.getId());
+		builder.roles(roles.toArray(new String[] {}));
 		
 		return builder.build();
 	}
@@ -87,12 +92,17 @@ public class CtUserDetailsService implements UserDetailsService {
 		Admin admin = adminDao.findByUsername(principal.getUsername());
 		
 		SessionUser user = new SessionUser();
-		Set<String> roleSet = admin.getRoleSet();
+		Set<String> roleSet = roleDao.findValueByAdminId(admin.getId());
 		user.setRoles(roleSet);
-		List<Role> roles = roleDao.findByValueIn(roleSet);
-		for (Role role : roles) {
-			user.addPermissions(role.getPermissionSet());
+		if (roleSet.contains(Role.ROLE_SUPER)) {
+			// 超管就获取所有权限
+			Set<String> permissionSet = permissionDao.findAllValue();
+			user.setPermissions(permissionSet);
+		}else {
+			Set<String> permissionSet = permissionDao.findValueByAdminId(admin.getId());
+			user.setPermissions(permissionSet);
 		}
+		
 		// 从缓存中获取 module 列表
 		List<SessionModule> sessionModules = moduleCache.get();
 		
