@@ -8,20 +8,25 @@
 package com.cetian.module.admin.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cetian.base.entity.ResponseMessage;
 import com.cetian.module.admin.dao.AdminDao;
+import com.cetian.module.admin.dao.AdminRoleDao;
 import com.cetian.module.admin.entity.Admin;
+import com.cetian.module.admin.entity.AdminRole;
+import com.cetian.module.admin.entity.AdminStatusEnum;
 import com.cetian.module.system.dao.RoleDao;
+import com.cetian.module.system.entity.Role;
 
 /**
  * @ClassName:  AdminService   
@@ -33,20 +38,15 @@ import com.cetian.module.system.dao.RoleDao;
 @Service
 @Transactional
 public class AdminService {
+	
 	@Autowired
 	private AdminDao adminDao;
 	@Autowired
 	private RoleDao roleDao;
-	
-	public void test() {
-		Admin  admin = new Admin();
-		admin.setName("管理员");
-		admin.setUsername("admin");
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		admin.setPassword(encoder.encode("admin"));
-		admin.setCreateDate(new Date());
-		adminDao.save(admin);
-	}
+	@Autowired
+	private AdminRoleDao adminRoleDao;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	public Admin get(String username) {
 		Admin admin = adminDao.findByUsername(username);
@@ -66,6 +66,7 @@ public class AdminService {
 	 * @return: ResponseMessage      
 	 * @throws: 
 	 */
+	@Deprecated
 	public ResponseMessage list(int pageNo, int pageSize) {
 		ResponseMessage responseMessage = new ResponseMessage();
 		PageRequest pageRequest = PageRequest.of(pageNo -1, pageSize, Direction.ASC, "id");
@@ -78,16 +79,34 @@ public class AdminService {
 	public ResponseMessage all() {
 		ResponseMessage responseMessage = new ResponseMessage();
 		Iterable<Admin> admins = adminDao.findAll();
+		for (Admin admin : admins) {
+			List<Role> roles = roleDao.findByAdminId(admin.getId());
+			admin.setRoles(roles);
+		}
 		responseMessage.put("admins", admins);
 		responseMessage.success();
 		return responseMessage;
 	}
 	
-	public ResponseMessage create(Admin admin) {
+	public ResponseMessage create(Admin admin, Long[] roleId) {
 		ResponseMessage responseMessage = new ResponseMessage();
-		// TODO 校验
+		// 登录名不能重名 TODO
+		
+		admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+		admin.setStatus(AdminStatusEnum.active);
+		Date date = new Date();
+		admin.setCreateDate(date);
+		admin.setUpdateDate(date);
 		
 		adminDao.save(admin);
+		// 添加角色 判断role存在和去重
+		for (Long rid : roleId) {
+			AdminRole ar = new AdminRole();
+			ar.setAdminId(admin.getId());
+			ar.setRoleId(rid);
+			adminRoleDao.save(ar);
+		}
+		
 		responseMessage.put("admin", admin);
 		responseMessage.success();
 		return responseMessage;
@@ -105,6 +124,7 @@ public class AdminService {
 		Optional<Admin> optional = adminDao.findById(id);
 		if (!optional.isPresent()) {
 			responseMessage.notFound();
+			return responseMessage;
 		}
 		responseMessage.put("admin", optional.get());
 		responseMessage.success();

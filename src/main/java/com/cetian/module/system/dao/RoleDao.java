@@ -33,6 +33,6 @@ public interface RoleDao extends PagingAndSortingRepository<Role, Long>, JpaSpec
 	@Query("select distinct r.value from Role r,Admin a,AdminRole ar where a.id=?1 and a.id=ar.adminId and r.id=ar.roleId")
 	Set<String> findValueByAdminId(Long adminId);
 	
-	@Query("select distinct r from Role r,Admin a,AdminRole ar where a.id=?1 and a.id=ar.adminId and r.id=ar.roleId order by id asc")
+	@Query("select distinct r from Role r,Admin a,AdminRole ar where a.id=?1 and a.id=ar.adminId and r.id=ar.roleId order by r.id asc")
 	List<Role> findByAdminId(Long adminId);
 }

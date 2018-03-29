@@ -7,7 +7,6 @@
  */
 package com.cetian.module.admin.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +31,7 @@ import com.cetian.module.system.entity.Role;
 public class Admin extends IdEntity {
 
 	private String head;// 头像
-	private String name;// 昵称
+	private String name;// 用户名
 	private String username;// 登录名
 	private String password;// 密码，密文
 	@Enumerated(EnumType.ORDINAL)
@@ -41,7 +40,7 @@ public class Admin extends IdEntity {
 	private Date updateDate;// 更新时间
 	
 	@Transient
-	private List<Role> roles = new ArrayList<>();
+	private List<Role> roles;
 	
 	public String getHead() {
 		return head;

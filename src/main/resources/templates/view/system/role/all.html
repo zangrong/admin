@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/template :: head(~{::title}, _)">
+    <title>AdminLTE 2 | Dashboard</title>
+</head>
+<body th:replace="layout/template :: body(~{::.content-wrapper}, ~{::script})">
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) 可以考虑模板处理 -->
+		<section class="content-header">
+			<h1>
+				角色管理 <small>Control panel</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li class="active">Dashboard</li>
+			</ol>
+		</section>
+        <div class="modal fade" id="modal-window">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">
+                <button type="button" class="btn btn-default" th:data-url="@{/role/create}" onclick="modalWindow(this);">
+	                +
+	            </button>
+              </h3>
+            </div>
+			<!-- /.box-header -->
+            <div class="box-body">
+              <table id="adminTable" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th>  </th>
+                  <th>角色</th>
+                  <th>权限</th>
+                  <th>备注</th>
+                  <th>创建时间</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="role,roleStat : ${roles}">
+                  <td th:text="${roleStat.index + 1}">1</td>
+                  <td th:text="${role.name}">角色名</td>
+                  <td th:text="'aa'">登录名</td>
+                  <td th:text="${role.remark}"></td>
+                  <td th:text="${role.createDate}">创建时间</td>
+                  <td>
+                    <button type="button" class="btn btn-default" th:data-url="@{/role/update}" th:data-id="${role.id}" onclick="modalWindow(this);">
+                     编辑
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+			<!-- /.row (main row) -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+	<script th:src="@{/system/js/test.js}"></script>
+    <script type="text/javascript">
+    function modalWindow(obj){
+    	var url = obj.getAttribute("data-url");
+    	var id = obj.getAttribute("data-id");
+    	if(id){
+            url = url+"?id="+id;
+        }
+        var modal = $('#modal-window').modal();
+        modal
+            .find('.modal-content')
+            .load(url, function (response, status) {
+                if ( status === 'success' || status === 'notmodified') {
+                    modal.show();
+                }
+        });
+    }
+    </script>
+</body>
+</html>

@@ -34,7 +34,7 @@ public class ModuleService {
 	@Autowired
 	private ModuleDao moduleDao;
 	
-	public List<Module> list(){
+	public List<Module> all(){
 		return (List<Module>) moduleDao.findAll();
 	}
 	

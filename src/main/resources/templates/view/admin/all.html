@@ -6,7 +6,7 @@
 <body th:replace="layout/template :: body(~{::.content-wrapper}, ~{::script})">
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
-		<!-- Content Header (Page header) -->
+		<!-- Content Header (Page header) 可以考虑模板处理 -->
 		<section class="content-header">
 			<h1>
 				管理员管理 <small>Control panel</small>
@@ -16,6 +16,15 @@
 				<li class="active">Dashboard</li>
 			</ol>
 		</section>
+        <div class="modal fade" id="modal-window">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
 
 		<!-- Main content -->
 		<section class="content">
@@ -23,9 +32,13 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Hover Data Table</h3>
+              <h3 class="box-title">
+                <button type="button" class="btn btn-default" th:data-url="@{/admin/create}" onclick="modalWindow(this);">
+	                +
+	            </button>
+              </h3>
             </div>
-            <!-- /.box-header -->
+			<!-- /.box-header -->
             <div class="box-body">
               <table id="adminTable" class="table table-bordered table-hover">
                 <thead>
@@ -40,14 +53,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="admin : ${admins}">
-                  <td th:text="${index}+1">1</td>
+                <tr th:each="admin,adminStat : ${admins}">
+                  <td th:text="${adminStat.index + 1}">1</td>
                   <td>头像</td>
                   <td th:text="${admin.name}">管理员</td>
                   <td th:text="${admin.username}">登录名</td>
-                  <td>角色</td>
-                  <td th:text="${admin.createDate}">登录名</td>
-                  <td>操作</td>
+                  <td>
+                    <span th:each="role : ${admin.roles}"><button type="button" class="btn btn-info btn-sm" th:text="${role.name}">Info</button></span>
+                  </td>
+                  <td th:text="${admin.createDate}">创建时间</td>
+                  <td>
+                    <button type="button" class="btn btn-default" th:data-url="@{/admin/update}" th:data-id="${admin.id}" onclick="modalWindow(this);">
+                     编辑
+                    </button>
+                  </td>
                 </tr>
                 </tbody>
               </table>
@@ -64,5 +83,22 @@
 	</div>
 	<!-- /.content-wrapper -->
 	<script th:src="@{/system/js/test.js}"></script>
+    <script type="text/javascript">
+    function modalWindow(obj){
+    	var url = obj.getAttribute("data-url");
+    	var id = obj.getAttribute("data-id");
+    	if(id){
+            url = url+"?id="+id;
+        }
+        var modal = $('#modal-window').modal();
+        modal
+            .find('.modal-content')
+            .load(url, function (response, status) {
+                if ( status === 'success' || status === 'notmodified') {
+                    modal.show();
+                }
+        });
+    }
+    </script>
 </body>
 </html>
