@@ -58,7 +58,7 @@
                   <td th:text="${question.id}">id</td>
                   <td th:text="${question.title}">题目</td>
                   <td th:text="${question.type}">题型</td>
-                  <td th:text="${admin.createDate}">创建时间</td>
+                  <td th:text="${question.createDate}">创建时间</td>
                   <td>
                     <button type="button" class="btn btn-default" th:data-url="@{/question/update}" th:data-id="${question.id}" onclick="modalWindow(this);">
                      编辑

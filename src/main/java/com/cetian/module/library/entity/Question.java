@@ -7,6 +7,7 @@
  */
 package com.cetian.module.library.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -40,6 +41,8 @@ public class Question extends IdEntity{
 	private List<Option> options;// 备选项，选择题
 	@Type(type = "json")
 	private CorrectAnswer answer;//
+	private Date createDate;
+	
 	public String getTitle() {
 		return title;
 	}
@@ -82,4 +85,11 @@ public class Question extends IdEntity{
 	public void setAnswer(CorrectAnswer answer) {
 		this.answer = answer;
 	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	
 }

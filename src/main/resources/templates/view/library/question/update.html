@@ -5,31 +5,31 @@
 		aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	</button>
-	<h4 class="modal-title">新增题目</h4>
+	<h4 class="modal-title">更新题目</h4>
 </div>
-<form th:attr="action=@{/question/create}" method="post"
+<form th:attr="action=@{/question/update}" method="post" th:object="${question}" 
 	class="form-horizontal">
+	<input type="hidden" name="id" th:value="${question.id}">
 	<div class="modal-body">
 		<div class="form-group">
 			<label for="title" class="col-sm-2 control-label">题面</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="title" name="title"
+				<input type="text" class="form-control" id="title" name="title" th:value="${question.title}" 
 					placeholder="题面">
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="type" class="col-sm-2 control-label">题型</label>
 			<div class="col-sm-10">
-				<select id="type" class="form-control" name="type" onchange="questionTypeChange();">
-				    <option value="0">单选</option>
-				    <option value="1">多选</option>
+			    <select id="type" name="type" class="form-control" onchange="questionTypeChange();">
+				    <option th:each="type: ${types}" th:text="${type.key}" th:value="${type.value}" th:selected="${question.type == type.value}">单选</option>
 				</select>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">备注</label>
 			<div class="col-sm-10">
-				<textarea class="form-control" rows="3" name="remark" placeholder="备注 ..."></textarea>
+				<textarea class="form-control" rows="3" name="remark" th:text="${question.remark}" placeholder="备注 ..."></textarea>
 			</div>
 		</div>
 		<div class="box">
@@ -61,18 +61,23 @@
 		<button type="submit" class="btn btn-primary">保存</button>
 	</div>
 </form>
-<script type="text/javascript">
+<script th:inline="javascript">
 
 // 题型
-var questionType = 0;
+var questionType = [[${question.type}]];
 
 $(function(){
-	// 默认添加4个选项
-	for(var i=0;i<4;i++){
-	    var tr = createOptTr(questionType);
-	    $("#itemTable").append(tr);
-	}
-	reindex();
+    var options = [[${question.options}]];
+    var answer = [[${question.answer}]];
+    var table = $("#itemTable");
+    if(options.length > 0){
+    	for(var i=0;i<options.length;i++){
+    		var opt = options[i];
+    		var tr = createOptTrFromObject(opt, answer);
+    		table.append(tr);
+    	}
+    }
+    reindex();
 });
 
 function questionTypeChange(){
@@ -80,10 +85,11 @@ function questionTypeChange(){
 	questionType = $('#type').val();
 	// 清空之前的选项
 	$('input[name="optionIdx"]').parent().parent().parent().remove();
+	var table = $("#itemTable");
 	// 默认添加4个选项
     for(var i=0;i<4;i++){
         var tr = createOptTr(questionType);
-        $("#itemTable").append(tr);
+        table.append(tr);
     }
     reindex();
 }
@@ -99,6 +105,41 @@ function reindex(){
 	$('input[name="optionIdx"]').each(function (index, element){
         $(element).val(index);
     });
+}
+
+// 必须要通过js脚本处理，英文题目存在不同类型
+function createOptTrFromObject(opt, answer){
+    var tr = $("<tr/>");
+    if(answer.type == 0){
+        // 单选
+        var td1 = $('<td/>');
+        var span = $('<span class="input-group-addon"></span>');
+        var input = $('<input type="radio" name="optionIdx" >');
+        if(opt.index == answer.single){
+        	input.attr("checked","checked");
+        }
+        span.append(input);
+        td1.append(span);
+        tr.append(td1);
+    }else if(answer.type == 1){
+        // 多选
+        var td1 = $('<td><span class="input-group-addon"><input type="checkbox" name="optionIdx" ></span></td>');
+        tr.append(td1);
+    }
+    
+    var td2 = $('<td/>');
+    var inputTitle = $('<input type="text" class="form-control" name="optionTitle" >');
+    inputTitle.val(opt.title);
+    td2.append(inputTitle);
+    tr.append(td2);
+    var td3 = $('<td/>');
+    var inputRemark = $('<input type="text" class="form-control" name="optionRemark" >');
+    inputRemark.val(opt.remark);
+    td3.append(inputRemark);
+    tr.append(td3);
+    var td4 = $('<td><button type="button" class="btn btn-default" onclick="deleteOptTr(this);">删除</button></td>');
+    tr.append(td4);
+    return tr;
 }
 
 function createOptTr(type){

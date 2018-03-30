@@ -25,5 +25,53 @@ public class CorrectAnswer {
 	private String shortanswer;// 简单题答案
 	private String remark;// 答案的备注说明
 	private List<Attachment> attachments;// 答案附件
+	public QuestionTypeEnum getType() {
+		return type;
+	}
+	public void setType(QuestionTypeEnum type) {
+		this.type = type;
+	}
+	public int getSingle() {
+		return single;
+	}
+	public void setSingle(int single) {
+		this.single = single;
+	}
+	public int[] getMultiple() {
+		return multiple;
+	}
+	public void setMultiple(int[] multiple) {
+		this.multiple = multiple;
+	}
+	public boolean isTruefalse() {
+		return truefalse;
+	}
+	public void setTruefalse(boolean truefalse) {
+		this.truefalse = truefalse;
+	}
+	public String[] getBlank() {
+		return blank;
+	}
+	public void setBlank(String[] blank) {
+		this.blank = blank;
+	}
+	public String getShortanswer() {
+		return shortanswer;
+	}
+	public void setShortanswer(String shortanswer) {
+		this.shortanswer = shortanswer;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public List<Attachment> getAttachments() {
+		return attachments;
+	}
+	public void setAttachments(List<Attachment> attachments) {
+		this.attachments = attachments;
+	}
 	
 }
