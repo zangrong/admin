@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal"
+		aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<h4 class="modal-title">新增题目</h4>
+</div>
+<form th:attr="action=@{/question/create}" method="post"
+	class="form-horizontal">
+	<div class="modal-body">
+		<div class="form-group">
+			<label for="title" class="col-sm-2 control-label">题面</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="title" name="title"
+					placeholder="题面">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="type" class="col-sm-2 control-label">题型</label>
+			<div class="col-sm-10">
+				<select id="type" class="form-control" name="type">
+				    <option>option 1</option>
+				    <option>option 2</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">备注</label>
+			<div class="col-sm-10">
+				<textarea class="form-control" rows="3" name="remark" placeholder="备注 ..."></textarea>
+			</div>
+		</div>
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">
+					选项列表
+				</h3>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+				<table id="roleTable" class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th></th>
+							<th>选项</th>
+							<th>备注</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="role : ${roles}">
+							<td><input type="checkbox" name="roleId" th:value="${role.id}" ></td>
+							<td th:text="${role.name}">角色名</td>
+							<td th:text="${role.remark}">备注</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default pull-left"
+			data-dismiss="modal">关闭</button>
+		<button type="submit" class="btn btn-primary">保存</button>
+	</div>
+</form>
+</html>

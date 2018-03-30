@@ -24,6 +24,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.cetian.module.admin.dao.AdminDao;
 import com.cetian.module.admin.entity.Admin;
+import com.cetian.module.exam.dao.PaperDao;
+import com.cetian.module.exam.entity.Paper;
+import com.cetian.module.library.dao.QuestionDao;
+import com.cetian.module.library.entity.Question;
 import com.cetian.module.system.dao.ModuleDao;
 import com.cetian.module.system.entity.Module;
 
@@ -38,7 +42,7 @@ import com.cetian.module.system.entity.Module;
 @EnableAutoConfiguration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackageClasses = {
-		AdminDao.class,ModuleDao.class }, entityManagerFactoryRef = DbConfiguration1.EMF1, transactionManagerRef = DbConfiguration1.TM1)
+		AdminDao.class,ModuleDao.class,QuestionDao.class,PaperDao.class }, entityManagerFactoryRef = DbConfiguration1.EMF1, transactionManagerRef = DbConfiguration1.TM1)
 public class DbConfiguration1 {
 
 	public static final String DB1 = "db1";
@@ -55,7 +59,8 @@ public class DbConfiguration1 {
 	@Primary
 	@Bean(name = EMF1)
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory1(EntityManagerFactoryBuilder builder) {
-		LocalContainerEntityManagerFactoryBean em = builder.dataSource(dataSource1()).packages(Admin.class, Module.class)
+		LocalContainerEntityManagerFactoryBean em = builder.dataSource(dataSource1())
+				.packages(Admin.class, Module.class, Question.class, Paper.class)
 				.persistenceUnit(DB1).build();
 		return em;
 	}

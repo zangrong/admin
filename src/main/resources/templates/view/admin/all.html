@@ -9,7 +9,7 @@
 		<!-- Content Header (Page header) 可以考虑模板处理 -->
 		<section class="content-header">
 			<h1>
-				管理员管理 <small>Control panel</small>
+				题目管理 <small>Control panel</small>
 			</h1>
 			<ol class="breadcrumb">
 				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -82,23 +82,6 @@
 		<!-- /.content -->
 	</div>
 	<!-- /.content-wrapper -->
-	<script th:src="@{/system/js/test.js}"></script>
-    <script type="text/javascript">
-    function modalWindow(obj){
-    	var url = obj.getAttribute("data-url");
-    	var id = obj.getAttribute("data-id");
-    	if(id){
-            url = url+"?id="+id;
-        }
-        var modal = $('#modal-window').modal();
-        modal
-            .find('.modal-content')
-            .load(url, function (response, status) {
-                if ( status === 'success' || status === 'notmodified') {
-                    modal.show();
-                }
-        });
-    }
-    </script>
+	<script th:src="@{/system/js/common.js}"></script>
 </body>
 </html>
