@@ -21,8 +21,8 @@
 		<div class="form-group">
 			<label for="type" class="col-sm-2 control-label">题型</label>
 			<div class="col-sm-10">
-			    <select id="type" name="type" class="form-control" onchange="questionTypeChange();">
-				    <option th:each="type: ${types}" th:text="${type.key}" th:value="${type.value}" th:selected="${question.type == type.value}">单选</option>
+			    <select id="type" name="type" class="form-control" onchange="questionTypeChange();" th:value="${question.type.value}">
+				    <option th:each="type: ${types}" th:text="${type.key}" th:value="${type.value}">单选</option>
 				</select>
 			</div>
 		</div>
@@ -67,6 +67,8 @@
 var questionType = [[${question.type}]];
 
 $(function(){
+	$('#type').get(0).selectedIndex = questionType;
+	
     var options = [[${question.options}]];
     var answer = [[${question.answer}]];
     var table = $("#itemTable");
@@ -123,7 +125,17 @@ function createOptTrFromObject(opt, answer){
         tr.append(td1);
     }else if(answer.type == 1){
         // 多选
-        var td1 = $('<td><span class="input-group-addon"><input type="checkbox" name="optionIdx" ></span></td>');
+    	var td1 = $('<td/>');
+        var span = $('<span class="input-group-addon"></span>');
+        var input = $('<input type="checkbox" name="optionIdx" >');
+        for(var i=0;i<answer.multiple.length;i++){
+        	if(opt.index == answer.multiple[i]){
+                input.attr("checked","checked");
+                break;
+            }
+        }
+        span.append(input);
+        td1.append(span);
         tr.append(td1);
     }
     
