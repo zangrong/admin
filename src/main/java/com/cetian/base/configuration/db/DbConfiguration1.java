@@ -24,6 +24,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.cetian.module.admin.dao.AdminDao;
 import com.cetian.module.admin.entity.Admin;
+import com.cetian.module.cms.dao.ArticleDao;
+import com.cetian.module.cms.entity.Article;
 import com.cetian.module.exam.dao.PaperDao;
 import com.cetian.module.exam.entity.Paper;
 import com.cetian.module.library.dao.QuestionDao;
@@ -41,7 +43,7 @@ import com.cetian.module.system.entity.Module;
 @Configuration
 @EnableAutoConfiguration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackageClasses = {
+@EnableJpaRepositories(basePackageClasses = {ArticleDao.class,
 		AdminDao.class,ModuleDao.class,QuestionDao.class,PaperDao.class }, entityManagerFactoryRef = DbConfiguration1.EMF1, transactionManagerRef = DbConfiguration1.TM1)
 public class DbConfiguration1 {
 
@@ -60,7 +62,7 @@ public class DbConfiguration1 {
 	@Bean(name = EMF1)
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory1(EntityManagerFactoryBuilder builder) {
 		LocalContainerEntityManagerFactoryBean em = builder.dataSource(dataSource1())
-				.packages(Admin.class, Module.class, Question.class, Paper.class)
+				.packages(Article.class, Admin.class, Module.class, Question.class, Paper.class)
 				.persistenceUnit(DB1).build();
 		return em;
 	}

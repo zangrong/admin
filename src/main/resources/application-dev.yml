@@ -10,7 +10,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
-        implicit_naming_strategy: com.cetian.base.configuration.db.ZeusImplicitNamingStrategyImpl
+        implicit_naming_strategy: com.cetian.base.configuration.db.CtImplicitNamingStrategyImpl
         hbm2ddl:
           auto:
   datasource:

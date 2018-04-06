@@ -47,7 +47,6 @@
                   <th>角色</th>
                   <th>权限</th>
                   <th>备注</th>
-                  <th>创建时间</th>
                   <th>操作</th>
                 </tr>
                 </thead>
@@ -57,7 +56,6 @@
                   <td th:text="${role.name}">角色名</td>
                   <td th:text="'aa'">登录名</td>
                   <td th:text="${role.remark}"></td>
-                  <td th:text="${role.createDate}">创建时间</td>
                   <td>
                     <button type="button" class="btn btn-default" th:data-url="@{/role/update}" th:data-id="${role.id}" onclick="modalWindow(this);">
                      编辑

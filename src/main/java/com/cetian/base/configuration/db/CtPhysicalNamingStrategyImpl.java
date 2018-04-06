@@ -1,6 +1,6 @@
 /**
  * @Copyright: 2017 cetian.com Inc. All rights reserved. 
- * @Title: YunPhysicalNamingStrategyImpl.java 
+ * @Title: CtPhysicalNamingStrategyImpl.java 
  * @date 2017年3月2日 下午5:11:01 
  * @version V1.0
  * @author zangrong
@@ -19,13 +19,14 @@ import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
 import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
 
 /**
- * @ClassName: YunPhysicalNamingStrategyImpl
+ * @ClassName: CtPhysicalNamingStrategyImpl
  * @Description: 数据库强制命名方式，目前暂不使用
  * @date: 2017年3月2日 下午5:11:01
  * @author: zangrong
  * @deprecated
  */
-public class ZeusPhysicalNamingStrategyImpl implements PhysicalNamingStrategy {
+@Deprecated
+public class CtPhysicalNamingStrategyImpl implements PhysicalNamingStrategy {
 	private static final Map<String, String> ABBREVIATIONS = buildAbbreviationMap();
 
 	@Override
