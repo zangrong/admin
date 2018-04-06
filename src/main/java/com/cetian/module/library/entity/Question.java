@@ -41,6 +41,7 @@ public class Question extends IdEntity{
 	private List<Option> options;// 备选项，选择题
 	@Type(type = "json")
 	private CorrectAnswer answer;//
+	private String tags;
 	private Date createDate;
 	
 	public String getTitle() {
@@ -84,6 +85,12 @@ public class Question extends IdEntity{
 	}
 	public void setAnswer(CorrectAnswer answer) {
 		this.answer = answer;
+	}
+	public String getTags() {
+		return tags;
+	}
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 	public Date getCreateDate() {
 		return createDate;
