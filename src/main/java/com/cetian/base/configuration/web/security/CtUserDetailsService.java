@@ -92,6 +92,10 @@ public class CtUserDetailsService implements UserDetailsService {
 		Admin admin = adminDao.findByUsername(principal.getUsername());
 		
 		SessionUser user = new SessionUser();
+		user.setId(admin.getId());
+		user.setUsername(admin.getUsername());
+		user.setName(admin.getName());
+		user.setHead(admin.getHead());
 		Set<String> roleSet = roleDao.findValueByAdminId(admin.getId());
 		user.setRoles(roleSet);
 		if (roleSet.contains(Role.ROLE_SUPER)) {

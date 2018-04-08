@@ -11,15 +11,16 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * @ClassName:  ContentStatusEnum   
- * @Description:TODO
+ * @Description: 内容状态
  * @date:  2018年4月6日 下午7:45:05
  * @author: zangrong
  * 
  */
 public enum ContentStatusEnum {
-	visible(0), // 正常可见
-	hide(1), // 隐藏
-	deleted(2),// 删除
+	draft(0), //草稿
+	published(1), // 发布
+	hide(2), // 隐藏
+	deleted(3),// 删除
 	;
 
 	private int value;
