@@ -115,8 +115,12 @@ public class CtInvocationSecurityMetadataSourceService implements FilterInvocati
 		// object 中包含用户请求的request 信息
 		HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
 		String requestURI = request.getRequestURI();
+//		log.warn("requestURI[{}]", requestURI);
 		// 登录后默认 /home 放行
 		if (StringUtils.startsWith(requestURI, "/home")) {
+			return null;
+		}
+		if (StringUtils.startsWith(requestURI, "/upload/")) {
 			return null;
 		}
 		for (Entry<AntPathRequestMatcher, Collection<ConfigAttribute>> entry : map.entrySet()) {

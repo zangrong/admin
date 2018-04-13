@@ -17,10 +17,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * 
  */
 public enum AttachmentTypeEnum {
-	image(0), // 图片
-	audio(1),// 音频
+	file(0), // 默认文件类型
+	image(1),// 图片
 	video(2),// 视频
-	file(3),// 文件
+	audio(3),// 音频
+	zip(4),// 压缩文件
+	word(5),// word文件
 	;
 
 	private int value;
