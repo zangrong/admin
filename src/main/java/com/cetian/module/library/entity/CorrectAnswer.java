@@ -9,6 +9,8 @@ package com.cetian.module.library.entity;
 
 import java.util.List;
 
+import com.cetian.module.common.entity.Attachment;
+
 /**
  * @ClassName:  CorrectAnswer   
  * @Description: 正确答案，通过json持久化

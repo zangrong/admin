@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 import com.cetian.base.entity.IdEntity;
+import com.cetian.module.common.entity.Attachment;
 
 /**
  * @ClassName:  Question   

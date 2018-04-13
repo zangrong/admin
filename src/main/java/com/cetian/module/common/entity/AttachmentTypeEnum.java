@@ -5,7 +5,7 @@
  * @version V1.0
  * @author zangrong
  */
-package com.cetian.module.library.entity;
+package com.cetian.module.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
