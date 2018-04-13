@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cetian.base.entity.ResponseMessage;
 import com.cetian.base.util.WebUtil;
@@ -51,8 +52,8 @@ public class ArticleController {
 	}
 	
 	@PostMapping("/create")
-	public String create(Article article, HttpSession session) {
-		ResponseMessage responseMessage = articleService.create(article, session);
+	public String create(HttpSession session, Article article, @RequestParam("faceImage") MultipartFile faceImage) {
+		ResponseMessage responseMessage = articleService.create(session, article, faceImage);
 		return WebUtil.redirect("/cms/article");
 	}
 	

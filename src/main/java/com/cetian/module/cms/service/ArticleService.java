@@ -20,12 +20,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cetian.base.configuration.web.security.entity.SessionUser;
 import com.cetian.base.entity.ResponseMessage;
+import com.cetian.base.service.QiniuService;
 import com.cetian.module.cms.dao.ArticleDao;
 import com.cetian.module.cms.entity.Article;
 import com.cetian.module.cms.entity.ContentStatusEnum;
+import com.cetian.module.common.entity.AttachmentTypeEnum;
 
 /**
  * @ClassName:  ArticleService   
@@ -42,6 +45,9 @@ public class ArticleService {
 	private static final Logger log = LoggerFactory.getLogger(ArticleService.class);
 
 	@Autowired
+	private QiniuService qiniuService;
+	
+	@Autowired
 	private ArticleDao articleDao;
 
 	public Page<Article> list(int pageNo, int pageSize){
@@ -54,14 +60,18 @@ public class ArticleService {
 	 * @Title: create   
 	 * @Description: 创建文章
 	 * @param article
+	 * @param faceImage 封面图片
 	 * @return: ResponseMessage      
 	 * @throws: 
 	 */
-	public ResponseMessage create(Article article, HttpSession session) {
+	public ResponseMessage create(HttpSession session, Article article, MultipartFile faceImage) {
 		ResponseMessage responseMessage = new ResponseMessage();
 		SessionUser sessionUser = (SessionUser)session.getAttribute(SessionUser.SESSION_USER_KEY);
+		// 上传封面到七牛
+		String faceUrl = qiniuService.upload(AttachmentTypeEnum.image, faceImage);
 		
 		article.setStatus(ContentStatusEnum.draft);
+		article.setFace(faceUrl);
 		Date date = new Date();
 		article.setCreateDate(date);
 		article.setUpdateDate(date);

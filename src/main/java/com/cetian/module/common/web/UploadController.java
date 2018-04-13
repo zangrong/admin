@@ -16,10 +16,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cetian.module.common.entity.AttachmentTypeEnum;
 import com.cetian.module.common.service.UploadService;
 
 /**
@@ -40,18 +42,17 @@ public class UploadController {
 	
 	/**
 	 * @return 
-	 * @Title: image   
+	 * @Title: upload   
 	 * @Description: 上传图片，用七牛      
 	 * @return: void      
 	 * @throws IOException 
 	 * @throws:
 	 */
-	@RequestMapping("/image")
-	public void image(@RequestParam("upload") MultipartFile file, @RequestParam("CKEditorFuncNum") String callback,
+	@RequestMapping("/{type}")
+	public void upload(@PathVariable("type") AttachmentTypeEnum type, @RequestParam("upload") MultipartFile file, @RequestParam("CKEditorFuncNum") String callback,
 			HttpServletResponse response) throws IOException {
-		log.warn("image file [{}]", file);
 		
-		String url = uploadService.image(file);
+		String url = uploadService.upload(type, file);
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.println("<script type='text/javascript'>");

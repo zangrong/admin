@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/template :: head(~{::title}, _)">
+<head th:replace="layout/template :: head(~{::title}, ~{::link})">
     <title>AdminLTE 2 | Dashboard</title>
+    <link rel="stylesheet" th:href="@{/static/bootstrap-fileinput/css/fileinput.min.css}">
 </head>
 <body th:replace="layout/template :: body(~{::.content-wrapper}, ~{::script})">
 	<!-- Content Wrapper. Contains page content -->
@@ -44,6 +45,7 @@
                 <thead>
                 <tr>
                   <th>id</th>
+                  <th>封面</th>
                   <th>标题</th>
                   <th>副标题</th>
                   <th>作者</th>
@@ -55,6 +57,7 @@
                 <tbody>
                 <tr th:each="article,articleStat : ${articles.content}">
                   <td th:text="${article.id}">1</td>
+                  <td><img alt="" th:src="${article.face}" style="width:30px;height:30px;"></td>
                   <td th:text="${article.title}">标题</td>
                   <td th:text="${article.subtitle}">副标题</td>
                   <td th:text="${article.author}">作者</td>

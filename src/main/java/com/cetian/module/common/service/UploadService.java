@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cetian.base.service.QiniuService;
+import com.cetian.module.common.entity.AttachmentTypeEnum;
 
 /**
  * @ClassName:  UploadService   
@@ -26,8 +27,8 @@ public class UploadService {
 	@Autowired
 	private QiniuService qiniuService;
 
-	public String image(MultipartFile file) {
-		String url = qiniuService.upload(file);
+	public String upload(AttachmentTypeEnum type, MultipartFile file) {
+		String url = qiniuService.upload(type, file);
 		return url;
 	}
 	

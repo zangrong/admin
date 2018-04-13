@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cetian.base.util.HttpUtil;
 import com.cetian.base.util.JacksonUtil;
+import com.cetian.module.common.entity.AttachmentTypeEnum;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
@@ -62,6 +63,21 @@ public class QiniuService {
 		return map;
 	}
 	
+	public String getKey(AttachmentTypeEnum type) {
+		String uuid = UUID.randomUUID().toString();
+		switch (type) {
+		case image:
+			return "image/" + uuid;
+		case video:
+			return "video/" + uuid;
+		case audio:
+			return "audio/" + uuid;
+		case file:
+		default:
+			return "file/" + uuid;
+		}
+	}
+	
 	/**
 	 * @Title: file
 	 * @Description: 上传本地文件到七牛
@@ -74,10 +90,10 @@ public class QiniuService {
 	 * @return: String
 	 * @throws:
 	 */
-	public String upload(MultipartFile file) {
+	public String upload(AttachmentTypeEnum type, MultipartFile file) {
 		String bucket = bucket1;
 		String downloadUrl = null;
-		String key = "image/" + UUID.randomUUID().toString();
+		String key = getKey(type);
 		Integer days = null;
 		Configuration cfg = new Configuration(Zone.zone2());
 		// ...其他参数参考类注释
