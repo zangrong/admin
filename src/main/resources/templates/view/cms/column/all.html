@@ -9,7 +9,7 @@
 		<!-- Content Header (Page header) 可以考虑模板处理 -->
 		<section class="content-header">
 			<h1>
-				管理员管理 <small>Control panel</small>
+				栏目管理 <small>Control panel</small>
 			</h1>
 			<ol class="breadcrumb">
 				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -33,7 +33,7 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">
-                <button type="button" class="btn btn-default" th:data-url="@{/admin/create}" onclick="modalWindow(this);">
+                <button type="button" class="btn btn-default" th:data-url="@{/cms/column/create}" onclick="modalWindow(this);">
 	                +
 	            </button>
               </h3>
@@ -43,27 +43,21 @@
               <table id="mainTable" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>  </th>
-                  <th>头像</th>
-                  <th>管理员</th>
-                  <th>登录名</th>
-                  <th>角色</th>
-                  <th>创建时间</th>
+                  <th>id</th>
+                  <th>logo</th>
+                  <th>栏目名称</th>
+                  <th>备注</th>
                   <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="admin,adminStat : ${admins}">
-                  <td th:text="${adminStat.index + 1}">1</td>
-                  <td>头像</td>
-                  <td th:text="${admin.name}">管理员</td>
-                  <td th:text="${admin.username}">登录名</td>
+                <tr th:each="column,columnStat : ${columns}">
+                  <td th:text="${columnStat.index + 1}">1</td>
+                  <td>logo</td>
+                  <td th:text="${column.name}">栏目名称</td>
+                  <td th:text="${column.remark}">备注</td>
                   <td>
-                    <span th:each="role : ${admin.roles}"><button type="button" class="btn btn-info btn-sm" th:text="${role.name}">Info</button></span>
-                  </td>
-                  <td th:text="${admin.createDate}">创建时间</td>
-                  <td>
-                    <button type="button" class="btn btn-default" th:data-url="@{/admin/update}" th:data-id="${admin.id}" onclick="modalWindow(this);">
+                    <button type="button" class="btn btn-default" th:data-url="@{/cms/column/update}" th:data-id="${column.id}" onclick="modalWindow(this);">
                      编辑
                     </button>
                   </td>

@@ -27,6 +27,7 @@ import com.cetian.base.entity.ResponseMessage;
 import com.cetian.base.service.QiniuService;
 import com.cetian.module.cms.dao.ArticleDao;
 import com.cetian.module.cms.entity.Article;
+import com.cetian.module.cms.entity.ContentSourceTypeEnum;
 import com.cetian.module.cms.entity.ContentStatusEnum;
 import com.cetian.module.common.entity.AttachmentTypeEnum;
 
@@ -72,6 +73,7 @@ public class ArticleService {
 		
 		article.setStatus(ContentStatusEnum.draft);
 		article.setFace(faceUrl);
+		article.setSourceType(ContentSourceTypeEnum.original);
 		Date date = new Date();
 		article.setCreateDate(date);
 		article.setUpdateDate(date);

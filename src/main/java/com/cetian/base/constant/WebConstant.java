@@ -18,4 +18,6 @@ public class WebConstant {
 	private WebConstant() {}
 	
 	public static final String DEFAULT_MODULE_LOGO = "fa fa-circle-o";// 模块默认前置logo
+	
+	private static final String DEFAULT_AVATAR = "";// 默认用户头像
 }
