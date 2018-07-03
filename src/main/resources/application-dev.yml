@@ -13,6 +13,13 @@ spring:
         implicit_naming_strategy: com.cetian.base.configuration.db.CtImplicitNamingStrategyImpl
         hbm2ddl:
           auto:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/solo
+    mongo:
+      #host: 127.0.0.1
+      #port: 27017
+      #database: solo
   datasource:
     db1: 
       type: org.apache.tomcat.jdbc.pool.DataSource
