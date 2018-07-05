@@ -33,6 +33,9 @@ import com.cetian.base.util.json.JsonStringType;
 @MappedSuperclass
 public abstract class IdEntity implements Serializable {
 
+	public static final String JSON = "json";
+	public static final String JSONB = "jsonb";
+
 	private static final long serialVersionUID = 8890435079654208095L;
 
 	@Id

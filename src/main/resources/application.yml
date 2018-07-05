@@ -1,4 +1,8 @@
 spring:
+  application:
+     name: xxx公司
   profiles:
     active: dev
 #    active: @zeus.profile@
+
+
