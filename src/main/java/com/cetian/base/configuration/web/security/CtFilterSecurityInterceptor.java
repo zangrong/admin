@@ -15,15 +15,26 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
 import org.springframework.security.access.intercept.InterceptorStatusToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.stereotype.Service;
+
+import com.cetian.base.configuration.web.security.entity.SessionUser;
+import com.cetian.base.util.WebUtil;
 
 /**
  * @ClassName:  CtFilterSecurityInterceptor   
@@ -39,7 +50,7 @@ public class CtFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
 
 	@Autowired
     private CtInvocationSecurityMetadataSourceService ctInvocationSecurityMetadataSourceService;
-	
+
 	@Autowired
 	public void setCtAccessDecisionManager(CtAccessDecisionManager ctAccessDecisionManager) {
 		super.setAccessDecisionManager(ctAccessDecisionManager);
@@ -60,7 +71,7 @@ public class CtFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		FilterInvocation fi = new FilterInvocation(request, response, chain);
-        invoke(fi);
+		invoke(fi);
 	}
 
 	public void invoke(FilterInvocation fi) throws IOException, ServletException {

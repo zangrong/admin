@@ -14,25 +14,25 @@ package com.cetian.base.entity;
  * @author: zangrong
  * 
  */
-public class KeyValue {
-	private Object key;
-	private Object value;
+public class KeyValue<K, V>{
+	private K key;
+	private V value;
 	
-	public KeyValue(Object key, Object value) {
+	public KeyValue(K key, V value) {
 		this.key = key;
 		this.value = value;
 	}
 	
-	public Object getKey() {
+	public K getKey() {
 		return key;
 	}
-	public void setKey(Object key) {
+	public void setKey(K key) {
 		this.key = key;
 	}
-	public Object getValue() {
+	public V getValue() {
 		return value;
 	}
-	public void setValue(Object value) {
+	public void setValue(V value) {
 		this.value = value;
 	}
 	

@@ -10,6 +10,7 @@ package com.cetian.base.entity;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.data.domain.Page;
 
 /**
@@ -54,8 +55,12 @@ public class ResponseMessage {
 	public String getMessage() {
 		return message;
 	}
-	public void setMessage(String message) {
-		this.message = message;
+	public void setMessage(String message, Object... args) {
+		if (ArrayUtils.isNotEmpty(args)) {
+			this.message = String.format(message, args);
+		}else{
+			this.message = message;
+		}
 	}
 	public Map<String, Object> getData() {
 		return data;
